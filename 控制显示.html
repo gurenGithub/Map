@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="百度地图,百度地图API，百度地图自定义工具，百度地图所见即所得工具" />
+    <meta name="description" content="百度地图API自定义地图，帮助用户在可视化操作下生成百度地图" />
+    <title>百度地图API自定义地图</title>
+    <!--引用百度地图API-->
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=5IYsIYg2GxMoLwgVBOa5VOnN"></script>
+	<script type="text/javascript" src="js/GeoUtils.js"></script>
+	<script type="text/javascript" src="js/xOverlay.js"></script>
+	<script type="text/javascript" src="js/json.js"></script>
+
+<script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.js"></script>
+	<link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.css" />
+<style type="text/css">  
+ 
+#shuiya {
+	font-size: 24px;
+	
+}
+</style>
+  </head>
+  
+  <body>
+
+
+
+    <!--百度地图容器-->
+    
+	 <div id="map" style="width: 1395px; height: 540px;"></div>
+<div style="display:none;">
+<input type="text" id="jingdu" value="" />
+<input type="text" id="weidu" value="" />
+<input type="text" id="leixing" value="" />
+<input tyle="input" id="set_center" value="" />
+<input type="text" id="wj6667x" value="" />
+<input type="text" id="wj6668x" value="" />
+<input type="text" id="wj6665x" value="" />
+<input type="text" id="wj6651x" value="" />
+<input type="text" id="wj6667x_gps" value="" />
+<input type="text" id="wj6668x_gps" value="" />
+<input type="text" id="wj6665x_gps" value="" />
+<input type="text" id="wj6651x_gps" value="" />
+<input type="text" id="wj6668x_now" value="" />
+<input type="text" id="wj6667x_now" value="" />
+<input type="text" id="wj6665x_now" value="" />
+<input type="text" id="wj6651x_now" value="" />
+<input type="text" id="wj6668x_daohang" value="" />
+<input type="text" id="wj6667x_daohang" value="" />
+<input type="text" id="wj6665x_daohang" value="" />
+<input type="text" id="wj6651x_daohang" value="" />
+<input type="text" id="shanshuo" value="" />
+<input type="text" id="wendang" value="" />
+<input type="text" id="zoom_value" value="15" />
+
+
+<img id="xiaofangshuanzhen" src="images/ICON32x32-d71d48/gyl.png" />
+<img id="cr15" src="images/ICON32x32-d71d48/bianji.png" />
+<img id="cr16" src="images/ICON32x32-d71d48/fabu.png" />
+<img id="cr17" src="images/ICON32x32-d71d48/user.png" />
+
+
+
+ <img id="cr13" src="CR1-3.png" />
+</div>
+    
+  
+  <script type="text/javascript">
+//创建和初始化地图函数：
+
+var map;
+map = new BMap.Map("map");
+map.centerAndZoom(new BMap.Point(120.279487,30.866256), 15);
+
+
+function initMap() {
+    createMap(); //创建地图
+    setMapEvent(); //设置地图事件
+    addMapControl();//向地图添加控件
+    addMapOverlay(); //向地图添加覆盖物
+	//init_lujing();
+	
+
+}
+
+function createMap() {
+    
+
+}
+
+function setMapEvent() {
+    map.enableScrollWheelZoom();
+    map.enableKeyboard();
+    map.enableDragging();
+    map.enableDoubleClickZoom();
+}
+
+function addClickHandler(target, window) {
+    target.addEventListener("click", function() {
+        target.openInfoWindow(window);
+    });
+}
+
+
+
+function addMapOverlay() {}
+//向地图添加控件
+function addMapControl() {
+    var scaleControl = new BMap.ScaleControl({
+        anchor: BMAP_ANCHOR_BOTTOM_LEFT
+    });
+  //  scaleControl.setUnit(BMAP_UNIT_IMPERIAL);
+    map.addControl(scaleControl);
+    var navControl = new BMap.NavigationControl({
+        anchor: BMAP_ANCHOR_TOP_LEFT,
+        type: BMAP_NAVIGATION_CONTROL_LARGE
+    });
+    map.addControl(navControl);
+    var overviewControl = new BMap.OverviewMapControl({
+        anchor: BMAP_ANCHOR_BOTTOM_RIGHT,
+        isOpen: true
+    });
+    map.addControl(overviewControl);
+}
+
+initMap();
+
+
+			
+
+//设置版权
+var cr = new BMap.CopyrightControl({
+    anchor: BMAP_ANCHOR_TOP_RIGHT
+}); //设置版权控件位置
+map.addControl(cr); //添加版权控件
+
+var bs = map.getBounds(); //返回地图可视区域
+cr.addCopyright({
+    id: 1,
+    content: "<a href='#' style='font-size:12px;background:yellow;font-family:cursive;'>正合科技网络有限公司</a>",
+    bounds: bs
+});
+
+
+
+//创建轨迹
+function init_lujing() {
+
+	
+	var polyline_wj6668x =new BMap.Polyline(new BMap.Point(120.279487,30.866256), {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5}); 
+	polyline_wj6668x.disableMassClear(); 
+	map.addOverlay(polyline_wj6668x);
+	
+	//polyline_6668x.hide();
+	var polyline_wj6667x = new BMap.Polyline(new BMap.Point(120.279487,30.866256), {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5});  
+	polyline_wj6667x.disableMassClear();
+	map.addOverlay(polyline_wj6667x);
+	//polyline_6667x.hide();
+	var polyline_wj6665x = new BMap.Polyline(new BMap.Point(120.279487,30.866256), {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5});  
+	polyline_wj6665x.disableMassClear();
+	map.addOverlay(polyline_wj6665x);
+	//polyline_6665x.hide();
+	var polyline_wj6651x = new BMap.Polyline(new BMap.Point(120.279487,30.866256), {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5});  
+	polyline_wj6651x.disableMassClear();
+	map.addOverlay(polyline_wj6651x);
+	//polyline_6651x.hide();
+
+}
+
+
+var xcanvas = xOverlay.createCanvas(map); //创建画布对象，单一对象
+var module = {};
+module.name = "Martin.Naer";
+module.tmpls = [];
+var pt = null;
+
+function alert_2(){
+
+
+
+var i = 0;
+for (; i < arr_object.length; i++) {
+	var llng =arr_object[i][0];
+	var llat =arr_object[i][1];
+	var ls_name=arr_object[i][3];
+	var tmpl = { overlayType: xOverlay.Types.Image, lat: llat, lng: llng, name: ls_name };
+	module.tmpls.push(tmpl);
+}
+
+
+
+//选中图层点击事件
+xcanvas.onSelectedClick = function (tmpl, overlay, moduleName) {
+	//
+	document.getElementById('jingdu').value=tmpl.lng.toString();
+	document.getElementById('weidu').value=tmpl.lat.toString();
+	document.getElementById('leixing').value=tmpl.name;
+        my_get_myinfo(tmpl.name,tmpl.lng,tmpl.lat);
+	//alert(tmpl.name);
+}
+//选中事件
+//xcanvas.onSelected = function (tmpl,overlay, moduleName) {
+	//可以对overlay设置任何的属性
+//alert(tmpl.name);
+//return ;
+
+//}
+//添加模块信息
+xcanvas.addModule(module.name, module.tmpls,
+function (param,ctx) {
+	//绘制之前事件，可用给param.offsetLeft,param.offsetTop设置偏移量，也可以返回{image:null,offsetLeft:0,offsetTop:10} 设置偏移量（有默认值的，可不设置）
+	var point_name;
+	point_name=param.name;
+
+	if(point_name.indexOf("xiaofangshuanzhen")>=0){
+		//document.getElementById("cr13").src="xiaofangshuanzhen.jpg";
+		var image=document.getElementById("xiaofangshuanzhen");
+	  	return image; //必须返回页面中一个指定的DOM对
+	}
+	if(point_name.indexOf("xiaofangshuanjia")>=0){
+		//document.getElementById("cr13").src="xiaofangshuanjia.jpg";
+		var image=document.getElementById("cr15");
+	  	return image; //必须返回页面中一个指定的DOM对
+	}
+	if(point_name.indexOf("danwei")>=0){
+		//document.getElementById("cr13").src="danwei.jpg";
+		var image=document.getElementById("cr17");
+	  	return image; //必须返回页面中一个指定的DOM对
+	}
+	if(point_name.indexOf("shuiyuan")>=0){
+		//document.getElementById("cr13").src="shuiyuan.jpg";
+		var image=document.getElementById("cr16");
+	  	return image; //必须返回页面中一个指定的DOM对
+	}
+
+//	var image=document.getElementById("cr13");
+//	  return image; //必须返回页面中一个指定的DOM对
+
+}, function (param,ctx) {
+	//绘制之后事件
+
+}
+);
+//添加图层
+
+	
+	map.addOverlay(xcanvas);
+}
+setTimeout("alert_2()",20);
+//function alert_1(){alert("oka");}
+function alert_1(){
+	//选中事件
+	xcanvas.clear();
+}
+var ftest=function(){
+	//document.getElementById("jingdu").value="11111111111111111111";
+	//window.alert("ssss");
+	//var c_canvas = document.getElementById("canvas");
+	//alert(c_canvas.width);
+	//ctx = c_canvas.getContext("2d");
+	//ctx.clearRect(0, 0, c_canvas.width, c_canvas.height);
+}
+
+function showA(){
+ 
+
+
+  xcanvas.refresh(function(item)
+  {
+    //通过调用xcanvas.setVisiable(item,true|false) 控制是否显示
+    xcanvas.setVisiable(item,
+        item.name.indexOf('xiaofangshuanzhen')>-1);
+  })
+}
+
+function showB(){
+
+
+  xcanvas.refresh(function(item)
+  {
+    xcanvas.setVisiable(item,
+        item.name.indexOf('xiaofangshuanjia')>-1);
+  })
+}
+function showC(){
+
+
+    xcanvas.refresh(function(item)
+  {
+    xcanvas.setVisiable(item,
+        item.name.indexOf('danwei')>-1);
+  })
+}
+
+function showD(){
+
+
+       xcanvas.refresh(function(item)
+  {
+    xcanvas.setVisiable(item,
+        item.name.indexOf('shuiyuan')>-1);
+  })
+}
+
+
+function showAll(){
+
+
+ xcanvas.refresh(function(item)
+  {
+    xcanvas.setVisiable(item,true);
+  })
+}
+
+function hideAll(){
+
+ xcanvas.refresh(function(item)
+   {
+    xcanvas.setVisiable(item,false);
+  })
+}
+  </script>
+
+ 
+<button value="显示A" onclick="showA()">显示A</button>
+<button value="显示B"  onclick="showB()">显示B</button>
+<button value="显示C"   onclick="showC()">显示C</button>
+<button value="显示D"   onclick="showD()">显示D</button>
+<button value="全部显示"  onclick="showAll()">全部显示</button>
+<button value="隐藏显示"  onclick="hideAll()">隐藏显示</button>
+</body>
+</html>
